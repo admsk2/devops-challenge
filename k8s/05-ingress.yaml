@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bird-apis-ingress
+  namespace: bird-apis
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /bird(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: bird-api
+            port: 
+              number: 80
+      - path: /bird-image(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: bird-image-api
+            port: 
+              number: 80
